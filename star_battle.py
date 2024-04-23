@@ -5,10 +5,10 @@ from ship import Ship
 
 
 class StarBattle:
-    """"Class to manage game's behavior and resources"""
+    """"Class to manage game's behavior and resources."""
 
     def __init__(self):
-        """Initialize pygame and create game's window"""
+        """Initialize pygame with the attributes of the game and create its window."""
         pygame.init()
         self.settings = Settings()
         self.clock = pygame.time.Clock()
@@ -18,26 +18,30 @@ class StarBattle:
         self.ship = Ship(self)
 
     def run_game(self):
-        """"Run the game using the main while loop"""
+        """"Run the game using the main while loop."""
         while True:
-            # Listen for pygame events
-            for event in pygame.event.get():
-                # Condition to quit the game
-                if event.type == pygame.QUIT:
-                    sys.exit()
-
-            # Redraws the screen on each loop
-            self.screen.fill(self.bg_color)
-
-            # Draws the ship
-            self.ship.blit_me()
-
-            # Shows the most recent drawn screen
-            pygame.display.flip()
+            self._check_events()
+            self._update_screen()
             self.clock.tick(self.settings.fps)
+
+    @staticmethod
+    def _check_events():
+        """Listen for mouse and keyboard events while the game is running."""
+        for event in pygame.event.get():
+            # Quits the game if the condition is matched
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+    def _update_screen(self):
+        # Fill the screen with the background color.
+        self.screen.fill(self.bg_color)
+        # Draws the ship.
+        self.ship.blit_me()
+        # Show the most recent drawn screen.
+        pygame.display.flip()
 
 
 if __name__ == "__main__":
-    # Creates an instance and runs the game
+    # Create an instance and run the game.
     sb = StarBattle()
     sb.run_game()
