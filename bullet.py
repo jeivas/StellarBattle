@@ -24,7 +24,13 @@ class Bullet(Sprite):
         """Move the bullet."""
         self.y -= self.settings.bullet_speed
         self.rect.y = self.y
+        self.remove_bullet()
 
     def draw_bullet(self):
         """Draw the bullet in its current position."""
         pygame.draw.rect(self.screen, self.bullet_color, self.rect)
+
+    def remove_bullet(self):
+        if self.rect.bottom < 0:
+            self.kill()
+            print("Sprite deleted")

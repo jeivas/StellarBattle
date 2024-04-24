@@ -4,6 +4,7 @@ from settings import Settings
 from ship import Ship
 from bullet import Bullet
 
+
 class StarBattle:
     """Class to manage game's behavior and resources."""
 
@@ -67,7 +68,9 @@ class StarBattle:
             # If "q" key is pressed quits the game.
             if event.key == pygame.K_q:
                 sys.exit()
-            self._shoot_bullets(event)
+            # Shoot bullets if space is pressed
+            if event.key == pygame.K_SPACE:
+                self._shoot_bullets()
         elif event.type == pygame.KEYUP:
             self._stop_ship(event)
 
@@ -91,10 +94,10 @@ class StarBattle:
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = False
 
-    def _shoot_bullets(self, event):
-        if event.key == pygame.K_SPACE:
-            new_bullet = Bullet(self)
-            self.bullets.add(new_bullet)
+    def _shoot_bullets(self):
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+        print(len(self.bullets))
 
 
 if __name__ == "__main__":
