@@ -33,4 +33,3 @@ class Bullet(Sprite):
     def remove_bullet(self):
         if self.rect.bottom < 0:
             self.kill()
-            print("Sprite deleted")
