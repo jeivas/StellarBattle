@@ -12,7 +12,20 @@ Bem-vindo ao repositório do StarBattle, um jogo de batalha espacial desenvolvid
 
 1. **Clone o Repositório**: Faça o clone do repositório para sua máquina local usando `git clone https://github.com/jeivas/StarBattle.git`.
 2. **Instale as Dependências**: Navegue até o diretório do projeto e instale as dependências necessárias.
-3. **Execute o Jogo**: Inicie o jogo executando o arquivo principal (por exemplo, `main.py`) com Python.
+3. **Execute o Jogo**: Inicie o jogo executando o arquivo principal (por exemplo, `star_battle.py`) com Python.
+
+Download pygame using the following command in the terminal:
+```console
+pip install pygame
+```
+cd to the folder where you have downloaded the repository and run the following command:
+```
+python star_battle.py
+```
+For mac and linux:
+```
+python3 star_battle.py
+```
 
 ## Requisitos
 
