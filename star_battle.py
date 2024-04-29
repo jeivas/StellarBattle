@@ -212,6 +212,8 @@ class StarBattle:
             bullet.kill()
 
         self.ship.rect.midbottom = self.screen.get_rect().midbottom
+        self.ship.x = self.ship.rect.x
+        self.ship.y = self.ship.rect.y
 
 
 if __name__ == "__main__":
