@@ -32,3 +32,7 @@ class Settings:
         self.font_border_color = pygame.Color(255, 0, 0)
         self.font_color = pygame.Color(255, 255, 255)
         self.points_position = (1235, 25)
+        self.streak_to_lose = 3
+
+        # Button
+        self.button_message = "Play"

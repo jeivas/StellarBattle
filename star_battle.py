@@ -39,11 +39,13 @@ class StarBattle:
 
         # Points system
         self.points = 0
+        self.points_streak = 0
 
     def run_game(self):
         """Run the game using the main while loop."""
         while True:
             self._check_events()
+            self._game_over()
             self._update_screen()
             self.bullets.update()
             self.aliens.update()
@@ -66,6 +68,7 @@ class StarBattle:
         # Fill the screen with the background color.
         self.screen.fill(self.bg_color)
 
+        # Draw a button if there is one in the container
         if len(self.button_container) > 0:
             self.button_container.update()
 
@@ -88,7 +91,7 @@ class StarBattle:
 
             self.ship.update_ship_position()
 
-        self._show_score()
+            self._show_score(self.points)
 
         # Show the most recent drawn screen.
         pygame.display.flip()
@@ -136,21 +139,19 @@ class StarBattle:
         """Delete alien object."""
         for alien in self.aliens:
             # Kill alien object if it passes the screen limit and remove a point.
-            if alien.rect.top > self.settings.alien_max_deep:
+            if alien.rect.bottom > self.settings.alien_max_deep or alien.rect.collidepoint(self.ship.rect.x, self.ship.rect.y):
                 alien.kill()
-                self._remove_point()
+                self.points_streak += 1
             for bullet in self.bullets:
                 # Kill alien object if it collides with the bullet and score a poit.
                 if alien.rect.collidepoint(bullet.rect.x, bullet.rect.y):
                     alien.kill()
                     bullet.kill()
                     self._score_point()
+                    self.points_streak = 0
 
     def _score_point(self):
         self.points += 1
-
-    def _remove_point(self):
-        self.points -= 1
 
     def _control_difficult(self):
         """Control game difficult based in the number of points"""
@@ -168,7 +169,7 @@ class StarBattle:
         textbox.center = (x, y)
         self.screen.blit(text, textbox)
 
-    def _show_score(self):
+    def _show_score(self, message):
         """Style the scoreboard and display it on screen"""
         x = self.settings.points_position[0]
         y = self.settings.points_position[1]
@@ -176,13 +177,13 @@ class StarBattle:
         # TEXT OUTLINE
 
         # top left
-        self.draw_text(x - 2, y - 2, str(self.points), self.settings.font_border_color, 40)
+        self.draw_text(x - 2, y - 2, str(message), self.settings.font_border_color, 40)
         # top right
-        self.draw_text(x + 2, y - 2, str(self.points), self.settings.font_border_color, 40)
+        self.draw_text(x + 2, y - 2, str(message), self.settings.font_border_color, 40)
         # btm left
-        self.draw_text(x - 2, y + 2, str(self.points), self.settings.font_border_color, 40)
+        self.draw_text(x - 2, y + 2, str(message), self.settings.font_border_color, 40)
         # btm right
-        self.draw_text(x + 2, y + 2, str(self.points), self.settings.font_border_color, 40)
+        self.draw_text(x + 2, y + 2, str(message), self.settings.font_border_color, 40)
 
         # TEXT FILL
 
@@ -193,6 +194,24 @@ class StarBattle:
             if event.type == pygame.MOUSEBUTTONDOWN and button.button_rect.collidepoint(pygame.mouse.get_pos()):
                 self.running = True
                 button.delete_button()
+
+    def _game_over(self):
+        if self.points_streak > self.settings.streak_to_lose - 1:
+            self.settings.button_message = "Play again"
+            self.running = False
+            self.button_container.add(Button(self))
+            self.points = 0
+            self.points_streak = 0
+            self._restart_game()
+
+    def _restart_game(self):
+        for alien in self.aliens:
+            alien.kill()
+
+        for bullet in self.bullets:
+            bullet.kill()
+
+        self.ship.rect.midbottom = self.screen.get_rect().midbottom
 
 
 if __name__ == "__main__":
