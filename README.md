@@ -16,7 +16,7 @@ Bem-vindo ao repositório do StarBattle, um jogo de batalha espacial desenvolvid
 
 ## Requisitos
 
-- Python 3.x
+- Python 3
 - Pygame
 
 ## Contribuindo
