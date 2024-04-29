@@ -3,6 +3,7 @@ from pygame.sprite import Sprite
 
 
 class Button(Sprite):
+    """Class to control the play and play again buttons"""
     def __init__(self, sb_game):
         super().__init__()
         self.screen = sb_game.screen
@@ -36,22 +37,6 @@ class Button(Sprite):
 
         # Draw the button on the screen
         self.screen.blit(self.button_surface, (self.button_rect.x, self.button_rect.y))
-
-    # def update(self, message):
-    #     """Display the button in the center of screen and add hover effects"""
-    #     if self.button_rect.collidepoint(pygame.mouse.get_pos()):
-    #         pygame.draw.rect(self.button_surface, (127, 255, 212), (1, 1, 148, 48))
-    #     else:
-    #         pygame.draw.rect(self.button_surface, (0, 0, 0), (0, 0, 150, 50))
-    #         pygame.draw.rect(self.button_surface, (255, 255, 255), (1, 1, 148, 48))
-    #         pygame.draw.rect(self.button_surface, (0, 0, 0), (1, 1, 148, 1), 2)
-    #         pygame.draw.rect(self.button_surface, (0, 100, 0), (1, 48, 148, 10), 2)
-    #
-    #     # Show the button text inside it
-    #     self.button_surface.blit(message, self.text_rect)
-    #
-    #     # Draw the button on the screen
-    #     self.screen.blit(self.button_surface, (self.button_rect.x, self.button_rect.y))
 
     def delete_button(self):
         self.kill()

@@ -45,12 +45,12 @@ class StarBattle:
         """Run the game using the main while loop."""
         while True:
             self._check_events()
+            self._control_difficult()
             self._game_over()
             self._update_screen()
             self.bullets.update()
             self.aliens.update()
             self._kill_alien()
-            self._control_difficult()
             self.clock.tick(self.settings.fps)
 
     def _check_events(self):
@@ -161,6 +161,10 @@ class StarBattle:
             self.settings.aliens_max = 5
         elif self.points > 20:
             self.settings.aliens_max = 6
+        elif self.points > 30:
+            self.settings.aliens_max = 7
+        elif self.points > 40:
+            self.settings.aliens_max = 8
 
     def draw_text(self, x, y, string, col, size):
         font = pygame.font.SysFont("Impact", size)
@@ -196,6 +200,7 @@ class StarBattle:
                 button.delete_button()
 
     def _game_over(self):
+        """Control when the player loses the game"""
         if self.points_streak > self.settings.streak_to_lose - 1:
             self.settings.button_message = "Play again"
             self.running = False
@@ -205,6 +210,7 @@ class StarBattle:
             self._restart_game()
 
     def _restart_game(self):
+        """Restart game resources"""
         for alien in self.aliens:
             alien.kill()
 
@@ -214,6 +220,7 @@ class StarBattle:
         self.ship.rect.midbottom = self.screen.get_rect().midbottom
         self.ship.x = self.ship.rect.x
         self.ship.y = self.ship.rect.y
+        print(self.aliens)
 
 
 if __name__ == "__main__":
